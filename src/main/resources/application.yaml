@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: ${SPRING_APPLICATION_NAME}
+  client:
+    user-management:
+      url: ${SPRING_CLIENT_USER_MANAGEMENT_URL}
+      version: ${SPRING_CLIENT_USER_MANAGEMENT_VERSION}
+  cloud:
+    circuitbreaker:
+      resilience4j:
+        instances:
+          cb-user-management:
+            slidingWindowSize: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_SLIDING_WINDOW_SIZE}
+            failureRateThreshold: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_FAILURE_RATE}
+            minimumNumberOfCalls: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_MIN_NUM_CALL}
+            waitDurationInOpenState: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_WAIT_OPEN_STATE}
+            permittedNumberOfCallsInHalfOpenState: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_HALF_OPEN_CALL}
+            registerHealthIndicator: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_HEALTH_INDICATOR}
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}
+    properties:
+      schema:
+        registry:
+          cache-capacity: ${SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_CACHE_CAPACITY}
+          url: ${SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_URL}
+    topic:
+      site-events: ${SPRING_KAFKA_TOPIC_SITE_EVENTS}
+      site-events-dlt: ${SPRING_KAFKA_TOPIC_SITE_EVENTS_DLT}
+      sensor-events: ${SPRING_KAFKA_TOPIC_SENSOR_EVENTS}
+      sensor-events-dlt: ${SPRING_KAFKA_TOPIC_SENSOR_EVENTS_DLT}
+    producer-avro:
+      key-serializer: ${SPRING_KAFKA_PRODUCER_AVRO_KEY_SERIALIZER}
+      value-serializer: ${SPRING_KAFKA_PRODUCER_AVRO_VALUE_SERIALIZER}
+    producer-dlt:
+      key-serializer: ${SPRING_KAFKA_PRODUCER_DLT_KEY_SERIALIZER}
+      value-serializer: ${SPRING_KAFKA_PRODUCER_DLT_VALUE_SERIALIZER}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ${SPRING_MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE}
+graylog:
+  host: ${GRAYLOG_HOST}
+  port: ${GRAYLOG_PORT}
+server:
+  port: ${SPRING_SERVER_PORT}

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: energy-stream-processor
+  namespace: green-energy-tracker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: energy-stream-processor
+  template:
+    metadata:
+      labels:
+        app: energy-stream-processor
+    spec:
+      imagePullSecrets:
+        - name: nexus-registry-secret
+      containers:
+        - name: energy-stream-processor
+          image: nexus-registry.local/com.green.energy.tracker/energy-stream-processor:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3002
+          envFrom:
+            - configMapRef:
+                name: energy-stream-processor-config
+            - secretRef:
+                name: energy-stream-processor-secret
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
