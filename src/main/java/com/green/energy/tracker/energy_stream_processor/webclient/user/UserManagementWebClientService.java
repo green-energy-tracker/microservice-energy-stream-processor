@@ -11,17 +11,17 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class UserManagementWebClientService {
 
-    private final UserManagementWebClient userManagementServiceClient;
+    private final UserManagementWebClient userManagementWebClient;
 
     @CircuitBreaker(name = "cb-user-management", fallbackMethod = "findByIdFallback")
-    public User findById(Long userId) {
-        return userManagementServiceClient.findById(userId);
+    public User getUserById(Long id) {
+        return userManagementWebClient.getUserById(id);
     }
 
-    public void findByIdFallback(Long userId, Throwable cause){
+    public void findByIdFallback(Long id, Throwable cause){
         String detailedMessage = String.format(
                 "User management service is currently unavailable. Unable to retrieve user for user id '%s'. Cause: %s",
-                userId,
+                id,
                 cause.getMessage()
         );
         throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, detailedMessage);
