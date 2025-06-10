@@ -35,7 +35,7 @@ public class EnergyDataKStream {
         kStream.foreach((k,v)-> {
             var sensor = sensorWebClientService.findByCode(v.getSensorCode());
             var site = siteWebClientService.findBySensorId(sensor.getId());
-            var user = userManagementWebClientService.findById(site.getOwnerId());
+            var user = userManagementWebClientService.getUserById(site.getOwnerId());
             log.info("consumed energy data event: {}, site: {}, sensor: {}, user: {}",v,site,sensor,user);
         });
         return kStream;

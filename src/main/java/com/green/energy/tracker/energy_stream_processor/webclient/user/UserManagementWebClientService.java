@@ -13,12 +13,12 @@ public class UserManagementWebClientService {
 
     private final UserManagementWebClient userManagementWebClient;
 
-    @CircuitBreaker(name = "cb-user-management", fallbackMethod = "findByIdFallback")
+    @CircuitBreaker(name = "cb-user-management", fallbackMethod = "getUserByIdFallback")
     public User getUserById(Long id) {
         return userManagementWebClient.getUserById(id);
     }
 
-    public void findByIdFallback(Long id, Throwable cause){
+    public void getUserByIdFallback(Long id, Throwable cause){
         String detailedMessage = String.format(
                 "User management service is currently unavailable. Unable to retrieve user for user id '%s'. Cause: %s",
                 id,
