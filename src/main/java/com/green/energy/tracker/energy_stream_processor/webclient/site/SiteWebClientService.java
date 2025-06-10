@@ -14,15 +14,15 @@ public class SiteWebClientService {
 
     private final SiteWebClient siteWebClient;
 
-    @CircuitBreaker(name = "cb-site-sensor-management", fallbackMethod = "findBySensorFallback")
-    public Site findBySensor(Sensor sensor) {
-        return siteWebClient.findBySensor(sensor);
+    @CircuitBreaker(name = "cb-site-sensor-management", fallbackMethod = "findBySensorIdFallback")
+    public Site findBySensorId(Long sensorId) {
+        return siteWebClient.findBySensorId(sensorId);
     }
 
-    public void findBySensorFallback(Sensor sensor, Throwable cause){
+    public void findBySensorIdFallback(Long sensorId, Throwable cause){
         String detailedMessage = String.format(
-                "Site management service is currently unavailable. Unable to retrieve site for sensor '%s'. Cause: %s",
-                sensor,
+                "Site management service is currently unavailable. Unable to retrieve site for sensor id '%s'. Cause: %s",
+                sensorId,
                 cause.getMessage()
         );
         throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, detailedMessage);

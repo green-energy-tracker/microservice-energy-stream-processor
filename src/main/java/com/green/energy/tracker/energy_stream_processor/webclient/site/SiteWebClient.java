@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 
 public interface SiteWebClient {
-    @GetExchange("/findBySensor")
-    Site findBySensor(@RequestBody Sensor sensor);
+    @GetExchange("/findBySensorId")
+    Site findBySensorId(@RequestParam Long sensorId);
 }
