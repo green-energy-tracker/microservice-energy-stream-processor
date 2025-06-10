@@ -31,7 +31,6 @@ public class CustomSerdesConfig {
         serdeConfig.put(AbstractKafkaSchemaSerDeConfig.AUTO_REGISTER_SCHEMAS, String.valueOf(autoRegisterSchemas));
         serdeConfig.put(KafkaAvroSerializerConfig.AVRO_REMOVE_JAVA_PROPS_CONFIG, true);
         serdeConfig.put("specific.avro.reader", true);
-        serdeConfig.put("value.subject.name.strategy", "io.confluent.kafka.serializers.subject.RecordNameStrategy");
         return serdeConfig;
     }
 
