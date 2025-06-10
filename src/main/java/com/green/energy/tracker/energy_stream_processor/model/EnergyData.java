@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 public class EnergyData {
     @JsonProperty("id")
     private Long id;
-    @JsonProperty("sensor_id")
-    private Long sensorId;
+    @JsonProperty("sensor_code")
+    private String sensorCode;
     @JsonProperty("timestamp")
     private Long timestamp;
     @JsonProperty("energy_kwh")
