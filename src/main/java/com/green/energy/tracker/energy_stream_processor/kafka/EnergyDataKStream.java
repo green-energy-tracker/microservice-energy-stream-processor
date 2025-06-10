@@ -1,5 +1,6 @@
 package com.green.energy.tracker.energy_stream_processor.kafka;
 
+import com.green.energy.tracker.configuration.domain.event.EnergyDataEvent;
 import com.green.energy.tracker.energy_stream_processor.model.EnergyData;
 import com.green.energy.tracker.energy_stream_processor.util.CustomSerdes;
 import com.green.energy.tracker.energy_stream_processor.webclient.sensor.SensorWebClientService;
@@ -11,6 +12,7 @@ import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -28,17 +30,24 @@ public class EnergyDataKStream {
     private final SensorWebClientService sensorWebClientService;
     private final SiteWebClientService siteWebClientService;
     private final UserManagementWebClientService userManagementWebClientService;
+    private final ModelMapper modelMapper;
 
     @Bean
     public KStream<String, EnergyData> invoiceKStream(StreamsBuilder streamsBuilder) {
-        KStream<String, EnergyData> kStream = streamsBuilder.stream(energyDataIngestTopic, Consumed.with(Serdes.String(),customSerdes.topicEnergyDataIngest()));
-        kStream.foreach((k,v)-> {
-            var sensor = sensorWebClientService.findByCode(v.getSensorCode());
-            var site = siteWebClientService.findBySensorId(sensor.getId());
-            var user = userManagementWebClientService.getUserById(site.getOwnerId());
-            log.info("consumed energy data event: {}, site: {}, sensor: {}, user: {}",v,site,sensor,user);
-        });
-        return kStream;
 
+        KStream<String, EnergyData> kStream = streamsBuilder.stream(energyDataIngestTopic, Consumed.with(Serdes.String(),customSerdes.topicEnergyDataIngest()));
+
+        kStream.peek((key,energyData)-> log.info("consuming energy data: key: {} - value: {}",key,energyData))
+                .mapValues(this::buildEnergyDataEvent)
+                .peek((key,energyDataEvent)-> log.info("mapping energy data event: key: {} - value: {}",key,energyDataEvent));
+        return kStream;
+    }
+
+    private EnergyDataEvent buildEnergyDataEvent(EnergyData energyData){
+        var sensorEvent = sensorWebClientService.findByCode(energyData.getSensorCode());
+        var siteEvent = siteWebClientService.findBySensorId(sensorEvent.getId());
+        var userEvent = userManagementWebClientService.getUserById(siteEvent.getOwnerId());
+        var energyDataEvent = modelMapper.map(energyData, com.green.energy.tracker.configuration.domain.event.EnergyData.class);
+        return EnergyDataEvent.newBuilder().setEnergyData(energyDataEvent).setSensor(sensorEvent).setSite(siteEvent).setUser(userEvent).build();
     }
 }
