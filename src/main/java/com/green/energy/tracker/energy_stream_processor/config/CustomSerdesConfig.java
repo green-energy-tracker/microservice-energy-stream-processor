@@ -1,4 +1,4 @@
-package com.green.energy.tracker.energy_stream_processor.util;
+package com.green.energy.tracker.energy_stream_processor.config;
 
 import com.green.energy.tracker.configuration.domain.event.EnergyDataEvent;
 import com.green.energy.tracker.energy_stream_processor.model.EnergyDataIngest;
