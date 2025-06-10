@@ -1,5 +1,6 @@
 package com.green.energy.tracker.energy_stream_processor.webclient.sensor;
 
+import com.green.energy.tracker.configuration.domain.event.Sensor;
 import com.green.energy.tracker.energy_stream_processor.webclient.user.UserManagementWebClient;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ public class SensorWebClientService {
     private final SensorWebClient sensorWebClient;
 
     @CircuitBreaker(name = "cb-site-sensor-management", fallbackMethod = "findByCodeFallback")
-    public Long findByCode(String code) {
+    public Sensor findByCode(String code) {
         return sensorWebClient.findByCode(code);
     }
 
