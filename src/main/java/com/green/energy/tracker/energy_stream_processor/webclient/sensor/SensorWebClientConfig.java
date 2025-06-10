@@ -18,13 +18,13 @@ public class SensorWebClientConfig {
     private String clientUserManagementVersion;
 
     @Bean
-    public UserManagementWebClient userManagementServiceClient() {
+    public SensorWebClient sensorServiceClient() {
         WebClient webClient = WebClient.create(
                 clientUserManagementUrl+"/"+clientUserManagementVersion+"/site-management/sensor"
         );
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builder()
                 .exchangeAdapter(WebClientAdapter.create(webClient))
                 .build();
-        return factory.createClient(UserManagementWebClient.class);
+        return factory.createClient(SensorWebClient.class);
     }
 }
