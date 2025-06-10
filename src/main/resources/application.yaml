@@ -5,11 +5,21 @@ spring:
     user-management:
       url: ${SPRING_CLIENT_USER_MANAGEMENT_URL}
       version: ${SPRING_CLIENT_USER_MANAGEMENT_VERSION}
+    site-sensor-management:
+      url: ${SPRING_CLIENT_SITE_SENSOR_MANAGEMENT_URL}
+      version: ${SPRING_CLIENT_SITE_SENSOR_MANAGEMENT_VERSION}
   cloud:
     circuitbreaker:
       resilience4j:
         instances:
           cb-user-management:
+            slidingWindowSize: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_SLIDING_WINDOW_SIZE}
+            failureRateThreshold: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_FAILURE_RATE}
+            minimumNumberOfCalls: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_MIN_NUM_CALL}
+            waitDurationInOpenState: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_WAIT_OPEN_STATE}
+            permittedNumberOfCallsInHalfOpenState: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_HALF_OPEN_CALL}
+            registerHealthIndicator: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_HEALTH_INDICATOR}
+          cb-site-sensor-management:
             slidingWindowSize: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_SLIDING_WINDOW_SIZE}
             failureRateThreshold: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_FAILURE_RATE}
             minimumNumberOfCalls: ${SPRING_CLOUD_CIRCUIT_BREAKER_USER_MIN_NUM_CALL}

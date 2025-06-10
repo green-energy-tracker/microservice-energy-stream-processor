@@ -13,7 +13,7 @@ public class UserManagementWebClientService {
     private final UserManagementWebClient userManagementServiceClient;
 
     @CircuitBreaker(name = "cb-user-management", fallbackMethod = "findUserIdByUsernameFallback")
-    public Long findUserIdByUsername(String username) {
+    public Object findUserIdByUsername(String username) {
         return userManagementServiceClient.findUserIdByUsername(username);
     }
 

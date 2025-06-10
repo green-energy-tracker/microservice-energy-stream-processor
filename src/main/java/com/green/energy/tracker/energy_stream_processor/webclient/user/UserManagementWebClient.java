@@ -5,5 +5,5 @@ import org.springframework.web.service.annotation.GetExchange;
 
 public interface UserManagementWebClient {
     @GetExchange("/findIdByUsername")
-    Long findUserIdByUsername(@RequestParam String username);
+    Object findUserIdByUsername(@RequestParam String username);
 }
