@@ -11,11 +11,11 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class SensorWebClientService {
 
-    private final SensorWebClientService sensorWebClientService;
+    private final SensorWebClient sensorWebClient;
 
     @CircuitBreaker(name = "cb-site-sensor-management", fallbackMethod = "findByCodeFallback")
     public Long findByCode(String code) {
-        return sensorWebClientService.findByCode(code);
+        return sensorWebClient.findByCode(code);
     }
 
     public void findByCodeFallback(String code, Throwable cause){

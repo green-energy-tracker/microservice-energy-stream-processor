@@ -12,15 +12,15 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 public class SensorWebClientConfig {
 
     @Value("${spring.client.site-sensor-management.url}")
-    private String clientUserManagementUrl;
+    private String clientSiteSensorManagementUrl;
 
     @Value("${spring.client.site-sensor-management.version}")
-    private String clientUserManagementVersion;
+    private String clientSiteSensorManagementVersion;
 
     @Bean
     public SensorWebClient sensorServiceClient() {
         WebClient webClient = WebClient.create(
-                clientUserManagementUrl+"/"+clientUserManagementVersion+"/site-management/sensor"
+                clientSiteSensorManagementUrl+"/"+clientSiteSensorManagementVersion+"/site-management/sensor"
         );
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builder()
                 .exchangeAdapter(WebClientAdapter.create(webClient))
