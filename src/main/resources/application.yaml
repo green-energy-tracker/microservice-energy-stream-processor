@@ -24,16 +24,8 @@ spring:
           cache-capacity: ${SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_CACHE_CAPACITY}
           url: ${SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_URL}
     topic:
-      site-events: ${SPRING_KAFKA_TOPIC_SITE_EVENTS}
-      site-events-dlt: ${SPRING_KAFKA_TOPIC_SITE_EVENTS_DLT}
-      sensor-events: ${SPRING_KAFKA_TOPIC_SENSOR_EVENTS}
-      sensor-events-dlt: ${SPRING_KAFKA_TOPIC_SENSOR_EVENTS_DLT}
-    producer-avro:
-      key-serializer: ${SPRING_KAFKA_PRODUCER_AVRO_KEY_SERIALIZER}
-      value-serializer: ${SPRING_KAFKA_PRODUCER_AVRO_VALUE_SERIALIZER}
-    producer-dlt:
-      key-serializer: ${SPRING_KAFKA_PRODUCER_DLT_KEY_SERIALIZER}
-      value-serializer: ${SPRING_KAFKA_PRODUCER_DLT_VALUE_SERIALIZER}
+      data-energy-ingest: ${SPRING_KAFKA_TOPIC_DATA_ENERGY_INGEST}
+      data-energy-events: ${SPRING_KAFKA_TOPIC_DATA_ENERGY_EVENTS}
 management:
   endpoints:
     web:
