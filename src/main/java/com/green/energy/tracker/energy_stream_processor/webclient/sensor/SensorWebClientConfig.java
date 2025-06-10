@@ -1,6 +1,5 @@
 package com.green.energy.tracker.energy_stream_processor.webclient.sensor;
 
-import com.green.energy.tracker.energy_stream_processor.webclient.user.UserManagementWebClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

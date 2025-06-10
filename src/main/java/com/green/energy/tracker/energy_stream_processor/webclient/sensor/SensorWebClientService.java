@@ -1,7 +1,6 @@
 package com.green.energy.tracker.energy_stream_processor.webclient.sensor;
 
 import com.green.energy.tracker.configuration.domain.event.Sensor;
-import com.green.energy.tracker.energy_stream_processor.webclient.user.UserManagementWebClient;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
