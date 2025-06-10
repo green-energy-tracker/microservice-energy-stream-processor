@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EnergyData {
+public class EnergyDataIngest {
     @JsonProperty("id")
     private Long id;
     @JsonProperty("sensor_code")
