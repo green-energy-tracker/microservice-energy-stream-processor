@@ -1,0 +1,30 @@
+package com.green.energy.tracker.energy_stream_processor.webclient.site;
+
+import com.green.energy.tracker.configuration.domain.event.Sensor;
+import com.green.energy.tracker.configuration.domain.event.Site;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+@Service("SiteWebClientServiceV1")
+@RequiredArgsConstructor
+public class SiteWebClientService {
+
+    private final SiteWebClient siteWebClient;
+
+    @CircuitBreaker(name = "cb-site-sensor-management", fallbackMethod = "findBySensorFallback")
+    public Site findBySensor(Sensor sensor) {
+        return siteWebClient.findBySensor(sensor);
+    }
+
+    public void findBySensorFallback(Sensor sensor, Throwable cause){
+        String detailedMessage = String.format(
+                "Site management service is currently unavailable. Unable to retrieve site for sensor '%s'. Cause: %s",
+                sensor,
+                cause.getMessage()
+        );
+        throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, detailedMessage);
+    }
+}

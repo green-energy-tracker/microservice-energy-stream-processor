@@ -3,6 +3,7 @@ package com.green.energy.tracker.energy_stream_processor.kafka;
 import com.green.energy.tracker.energy_stream_processor.model.EnergyData;
 import com.green.energy.tracker.energy_stream_processor.util.CustomSerdes;
 import com.green.energy.tracker.energy_stream_processor.webclient.sensor.SensorWebClientService;
+import com.green.energy.tracker.energy_stream_processor.webclient.site.SiteWebClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serdes;
@@ -24,13 +25,15 @@ public class EnergyDataKStream {
     private String energyDataEventsTopic;
     private final CustomSerdes customSerdes;
     private final SensorWebClientService sensorWebClientService;
+    private final SiteWebClientService siteWebClientService;
 
     @Bean
     public KStream<String, EnergyData> invoiceKStream(StreamsBuilder streamsBuilder) {
         KStream<String, EnergyData> kStream = streamsBuilder.stream(energyDataIngestTopic, Consumed.with(Serdes.String(),customSerdes.topicEnergyDataIngest()));
         kStream.foreach((k,v)-> {
             var sensor = sensorWebClientService.findByCode(v.getSensorCode());
-            log.info("consumed energy data event: {}, sensor: {}",v,sensor);
+            var site = siteWebClientService.findBySensor(sensor);
+            log.info("consumed energy data event: {}, site: {}, sensor: {}",v,site,sensor);
         });
         return kStream;
 
