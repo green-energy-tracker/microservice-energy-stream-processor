@@ -32,8 +32,8 @@ public class EnergyDataKStream {
         KStream<String, EnergyData> kStream = streamsBuilder.stream(energyDataIngestTopic, Consumed.with(Serdes.String(),customSerdes.topicEnergyDataIngest()));
         kStream.foreach((k,v)-> {
             var sensor = sensorWebClientService.findByCode(v.getSensorCode());
-            var site = siteWebClientService.findBySensor(sensor);
-            log.info("consumed energy data event: {}, site: {}, sensor: {}",v,site,sensor);
+            //var site = siteWebClientService.findBySensor(sensor);
+            log.info("consumed energy data event: {}, site: {}, sensor: {}",v,"",sensor);
         });
         return kStream;
 
