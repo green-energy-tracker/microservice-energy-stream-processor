@@ -1,6 +1,7 @@
 package com.green.energy.tracker.energy_stream_processor.config;
 
 import com.green.energy.tracker.configuration.domain.event.EnergyDataEvent;
+import com.green.energy.tracker.energy_stream_processor.kafka.DltRecord;
 import com.green.energy.tracker.energy_stream_processor.model.EnergyDataIngest;
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
@@ -45,6 +46,13 @@ public class CustomSerdesConfig {
     public Serde<EnergyDataIngest> serdeEnergyDataIngest() {
         JsonSerializer<EnergyDataIngest> serializer = new JsonSerializer<>();
         JsonDeserializer<EnergyDataIngest> deserializer = new JsonDeserializer<>(EnergyDataIngest.class, false);
+        return Serdes.serdeFrom(serializer, deserializer);
+    }
+
+    @Bean
+    public Serde<DltRecord> serdeDltRecord() {
+        JsonSerializer<DltRecord> serializer = new JsonSerializer<>();
+        JsonDeserializer<DltRecord> deserializer = new JsonDeserializer<>(DltRecord.class, false);
         return Serdes.serdeFrom(serializer, deserializer);
     }
 }

@@ -36,6 +36,7 @@ spring:
     topic:
       data-energy-ingest: ${SPRING_KAFKA_TOPIC_DATA_ENERGY_INGEST}
       data-energy-events: ${SPRING_KAFKA_TOPIC_DATA_ENERGY_EVENTS}
+      data-energy-events-dlt: ${SPRING_KAFKA_TOPIC_DATA_ENERGY_EVENTS_DLT}
 management:
   endpoints:
     web:
