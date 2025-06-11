@@ -22,11 +22,7 @@ public class SiteWebClientService {
     }
 
     public void findBySensorIdFallback(Long sensorId, Throwable cause){
-        String detailedMessage = String.format(
-                "Site management service is currently unavailable. Unable to retrieve site for sensor id '%s'. Cause: %s",
-                sensorId,
-                cause.getMessage()
-        );
-        throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, detailedMessage);
+        String detailedMessage = "Site management service is currently unavailable. Unable to retrieve site for sensor id '%s'. Cause: %s";
+        throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, String.format(detailedMessage,sensorId,cause.getMessage()));
     }
 }

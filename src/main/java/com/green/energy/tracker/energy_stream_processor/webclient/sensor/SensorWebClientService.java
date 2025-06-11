@@ -22,11 +22,7 @@ public class SensorWebClientService {
     }
 
     public void findByCodeFallback(String code, Throwable cause){
-        String detailedMessage = String.format(
-                "Sensor management service is currently unavailable. Unable to retrieve sensor for code '%s'. Cause: %s",
-                code,
-                cause.getMessage()
-        );
-        throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, detailedMessage);
+        var detailedMessage = "Sensor management service is currently unavailable. Unable to retrieve sensor for code '%s'. Cause: %s";
+        throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, String.format(detailedMessage,code,cause.getMessage()));
     }
 }

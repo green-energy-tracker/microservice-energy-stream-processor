@@ -18,12 +18,8 @@ public class UserManagementWebClientConfig {
 
     @Bean
     public UserManagementWebClient userManagementServiceClient() {
-        WebClient webClient = WebClient.create(
-                clientUserManagementUrl+"/"+clientUserManagementVersion+"/user-management"
-        );
-        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builder()
-                .exchangeAdapter(WebClientAdapter.create(webClient))
-                .build();
+        var webClient = WebClient.create(clientUserManagementUrl+"/"+clientUserManagementVersion+"/user-management");
+        var factory = HttpServiceProxyFactory.builder().exchangeAdapter(WebClientAdapter.create(webClient)).build();
         return factory.createClient(UserManagementWebClient.class);
     }
 }

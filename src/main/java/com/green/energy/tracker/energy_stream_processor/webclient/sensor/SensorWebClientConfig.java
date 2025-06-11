@@ -18,12 +18,8 @@ public class SensorWebClientConfig {
 
     @Bean
     public SensorWebClient sensorServiceClient() {
-        WebClient webClient = WebClient.create(
-                clientSiteSensorManagementUrl+"/"+clientSiteSensorManagementVersion+"/site-management/sensor"
-        );
-        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builder()
-                .exchangeAdapter(WebClientAdapter.create(webClient))
-                .build();
+        var webClient = WebClient.create(clientSiteSensorManagementUrl+"/"+clientSiteSensorManagementVersion+"/site-management/sensor");
+        var factory = HttpServiceProxyFactory.builder().exchangeAdapter(WebClientAdapter.create(webClient)).build();
         return factory.createClient(SensorWebClient.class);
     }
 }

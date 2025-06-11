@@ -44,9 +44,9 @@ public class EnergyDataKStream {
     public KStream<String, EnergyDataIngest> invoiceKStream(StreamsBuilder streamsBuilder, Serde<EnergyDataIngest> serdeEnergyDataIngest,
                                                            Serde<EnergyDataEvent> serdeEnergyDataEvent, Serde<DltRecord> serdeDltRecord) {
 
-        KStream<String, EnergyDataIngest> kStream = streamsBuilder.stream(energyDataIngestTopic,Consumed.with(Serdes.String(),serdeEnergyDataIngest));
+        var kStream = streamsBuilder.stream(energyDataIngestTopic,Consumed.with(Serdes.String(),serdeEnergyDataIngest));
 
-        KStream<String, EnrichEnergyDataEventResult> kStreamEnrichEnergyDataEventResult = kStream
+        var kStreamEnrichEnergyDataEventResult = kStream
                 .peek((key,energyDataEvent)-> log.info("Map energy data event: key: {} - value: {}",key,energyDataEvent))
                 .mapValues(this::buildEnergyDataEvent);
 

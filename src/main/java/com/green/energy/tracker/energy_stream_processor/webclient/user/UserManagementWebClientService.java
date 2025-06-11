@@ -22,11 +22,7 @@ public class UserManagementWebClientService {
     }
 
     public void getUserByIdFallback(Long id, Throwable cause){
-        String detailedMessage = String.format(
-                "User management service is currently unavailable. Unable to retrieve user for user id '%s'. Cause: %s",
-                id,
-                cause.getMessage()
-        );
-        throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, detailedMessage);
+        String detailedMessage = "User management service is currently unavailable. Unable to retrieve user for user id '%s'. Cause: %s";
+        throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,  String.format(detailedMessage, id, cause.getMessage()));
     }
 }
